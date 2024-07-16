@@ -8,38 +8,38 @@ namespace MyBookApp.Api.Controllers;
 [Route("api/[controller]")]
 public class PublisherController : ControllerBase
 {
-    private readonly IPublisherService _publisherSevice;
+    private readonly IPublisherService _publisherService;
 
     public PublisherController(IPublisherService publisherService)
     {
-        _publisherSevice = publisherService;
+        _publisherService = publisherService;
     }
 
     [HttpPost]
     public async Task<IActionResult> AddPublisher([FromBody] PublisherRequest publisherRequest)
     {
-        var publisherId = await _publisherSevice.AddPublisherAsync(publisherRequest);
+        var publisherId = await _publisherService.AddPublisherAsync(publisherRequest);
         return Ok(publisherId);
     }
     
     [HttpGet("{id:int}")]
     public async Task<IActionResult> GetPublisher(int id)
     {
-        var publisher = await _publisherSevice.GetPublisherAsync(id);
+        var publisher = await _publisherService.GetPublisherAsync(id);
         return Ok(publisher);
     }
 
     [HttpPatch("{id:int}")]
     public async Task<IActionResult> UpdatePublisherAsync(int id, PublisherRequest publisherRequest)
     {
-        await _publisherSevice.UpdatePublisherAsync(id, publisherRequest);
+        await _publisherService.UpdatePublisherAsync(id, publisherRequest);
         return Ok();
     }
 
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> DeletePublisherAsync(int id)
     {
-        await _publisherSevice.DeletePublisherAsync(id);
+        await _publisherService.DeletePublisherAsync(id);
         return Ok();
     }
 }

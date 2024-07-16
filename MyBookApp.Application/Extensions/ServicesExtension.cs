@@ -10,6 +10,7 @@ public static class ServicesExtension
     {
         return services
             .AddScoped<IAuthorService, AuthorService>()
-            .AddScoped<IPublisherService,PublisherService>();
+            .AddScoped<IPublisherService,PublisherService>()
+            .AddScoped<IBookService,BookService>();
     }
 }

@@ -27,4 +27,9 @@ public static class BookMapper
             PublisherId = book.PublisherId
         };
     }
+
+    public static IEnumerable<BookResponse> MapToContract(this IEnumerable<Book> books)
+    {
+        return books.Select(x => x.MapToContract());
+    }
 }

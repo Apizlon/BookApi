@@ -9,38 +9,38 @@ namespace MyBookApp.Api.Controllers;
 [Route("api/[controller]")]
 public class AuthorController : ControllerBase
 {
-    private readonly IAuthorService _authorSevice;
+    private readonly IAuthorService _authorService;
 
     public AuthorController(IAuthorService authorService)
     {
-        _authorSevice = authorService;
+        _authorService = authorService;
     }
 
     [HttpPost]
     public async Task<IActionResult> AddAuthor([FromBody] AuthorRequest authorRequest)
     {
-        var authorId = await _authorSevice.AddAuthorAsync(authorRequest);
+        var authorId = await _authorService.AddAuthorAsync(authorRequest);
         return Ok(authorId);
     }
     
     [HttpGet("{id:int}")]
     public async Task<IActionResult> GetAuthor(int id)
     {
-        var author = await _authorSevice.GetAuthorAsync(id);
+        var author = await _authorService.GetAuthorAsync(id);
         return Ok(author);
     }
 
     [HttpPatch("{id:int}")]
     public async Task<IActionResult> UpdateAuthorAsync(int id, AuthorRequest authorRequest)
     {
-        await _authorSevice.UpdateAuthorAsync(id, authorRequest);
+        await _authorService.UpdateAuthorAsync(id, authorRequest);
         return Ok();
     }
 
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> DeleteAuthorAsync(int id)
     {
-        await _authorSevice.DeleteAuthorAsync(id);
+        await _authorService.DeleteAuthorAsync(id);
         return Ok();
     }
 }
