@@ -1,5 +1,7 @@
 ﻿namespace MyBookApp.Application.Contracts;
 
-public record AuthorRequest(
-    string FullName,
-    string DateOfBirth);
+public class AuthorRequest
+{
+    public string FullName { get; set; }
+    public string DateOfBirth { get; set; }
+}

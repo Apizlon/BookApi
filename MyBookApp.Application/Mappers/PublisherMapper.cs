@@ -9,12 +9,16 @@ public static class PublisherMapper
     {
         return new Publisher
         {
-            Name=request.Name
+            Name = request.Name
         };
     }
 
     public static PublisherResponse MapToContract(this Publisher publisher)
     {
-        return new PublisherResponse(publisher.Id,publisher.Name);
+        return new PublisherResponse
+        {
+            Id = publisher.Id,
+            Name = publisher.Name
+        };
     }
 }

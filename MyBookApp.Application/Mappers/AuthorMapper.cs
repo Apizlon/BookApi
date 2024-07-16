@@ -16,6 +16,11 @@ public static class AuthorMapper
 
     public static AuthorResponse MapToContract(this Author author)
     {
-        return new AuthorResponse(author.Id, author.FullName, author.DateOfBirth);
+        return new AuthorResponse
+        {
+            Id = author.Id,
+            FullName = author.FullName,
+            DateOfBirth = author.DateOfBirth
+        };
     }
 }

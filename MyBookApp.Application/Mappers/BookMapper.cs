@@ -18,6 +18,13 @@ public static class BookMapper
 
     public static BookResponse MapToContract(this Book book)
     {
-        return new BookResponse(book.Id,book.Name,book.Description,book.AuthorId,book.PublisherId);
+        return new BookResponse
+        {
+            Id = book.Id,
+            Name = book.Name,
+            Description = book.Description,
+            AuthorId = book.AuthorId,
+            PublisherId = book.PublisherId
+        };
     }
 }

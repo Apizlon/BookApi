@@ -1,7 +1,9 @@
 ﻿namespace MyBookApp.Application.Contracts;
 
-public record BookRequest(
-    string Name,
-    string Description,
-    int AuthorId,
-    int PublisherId);
+public class BookRequest
+{
+    public string Name { get; set; }
+    public string Description { get; set; }
+    public int AuthorId { get; set; }
+    public int PublisherId { get; set; }
+}

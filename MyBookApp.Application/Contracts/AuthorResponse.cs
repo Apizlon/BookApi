@@ -1,6 +1,8 @@
 ﻿namespace MyBookApp.Application.Contracts;
 
-public record AuthorResponse(
-    int Id,
-    string FullName,
-    string DateOfBirth);
+public class AuthorResponse
+{
+    public int Id { get; set; }
+    public string FullName { get; set; }
+    public string DateOfBirth { get; set; }
+}

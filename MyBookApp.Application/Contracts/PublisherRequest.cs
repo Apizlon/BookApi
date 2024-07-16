@@ -1,4 +1,6 @@
 ﻿namespace MyBookApp.Application.Contracts;
 
-public record PublisherRequest(
-    string Name);
+public class PublisherRequest
+{
+    public string Name { get; set; }
+}
