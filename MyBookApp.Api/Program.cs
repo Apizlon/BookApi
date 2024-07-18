@@ -1,3 +1,4 @@
+using MyBookApp.Api.Middlewares;
 using MyBookApp.Application.Extensions;
 using MyBookApp.DataAccess.Extensions;
 
@@ -9,6 +10,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.MigrateDatabase(builder.Configuration);
 builder.Services.AddRepositories();
 builder.Services.AddServices();
+builder.Services.AddTransient<CustomExceptionHandlingMiddleware>();
 
 var app = builder.Build();
 
@@ -19,7 +21,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseMiddleware<CustomExceptionHandlingMiddleware>();
 app.UseAuthorization();
 app.MapControllers();
 
