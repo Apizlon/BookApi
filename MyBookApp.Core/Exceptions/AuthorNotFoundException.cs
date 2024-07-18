@@ -2,7 +2,7 @@
 
 public class AuthorNotFoundException : NotFoundException
 {
-    public AuthorNotFoundException(int id) : base("Автор с id {id} не найден.")
+    public AuthorNotFoundException(int id) : base($"Автор с id {id} не найден.")
     {
         
     }
