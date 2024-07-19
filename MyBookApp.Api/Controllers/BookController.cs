@@ -42,24 +42,17 @@ public class BookController : ControllerBase
         return Ok();
     }
 
-    [HttpGet]
-    public async Task<IActionResult> GetBooksByPublisherOrAuthor(int publisherId, int authorId)
+    [HttpGet("publisher/{publisherId:int}")]
+    public async Task<IActionResult> GetBooksByPublisherId(int publisherId)
     {
-        // IEnumerable<BookResponse> selectedBooks = await publisherId == 0
-        //     ? _bookService.GetBooksByAuthorIdAsync(authorId)
-        //     : _bookService.GetBooksByPublisherIdAsync(publisherId);
-        // return Ok(selectedBooks);
-        IEnumerable<BookResponse> selectedBooks;
+        var selectedBooks = await _bookService.GetBooksByPublisherIdAsync(publisherId);
+        return Ok(selectedBooks);
+    }
     
-        if (publisherId == 0)
-        {
-            selectedBooks = await _bookService.GetBooksByAuthorIdAsync(authorId);
-        }
-        else
-        {
-            selectedBooks = await _bookService.GetBooksByPublisherIdAsync(publisherId);
-        }
-
+    [HttpGet("author/{authorId:int}")]
+    public async Task<IActionResult> GetBooksByAuthorId(int authorId)
+    {
+        var selectedBooks = await _bookService.GetBooksByAuthorIdAsync(authorId);
         return Ok(selectedBooks);
     }
 }

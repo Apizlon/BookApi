@@ -8,7 +8,7 @@ namespace MyBookApp.Application.Validators;
 
 public static class AuthorValidator
 {
-    private static string _datePattern = 
+    private static readonly string DatePattern = 
         @"^(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[0-2])\.([0-9]{4})$";
  
     public static void AddValidation(this AuthorRequest authorRequest)
@@ -18,7 +18,7 @@ public static class AuthorValidator
             throw new ValidationException("Имя должно быть непустым, длиной до 50 символов");
         }
 
-        if (!new Regex(_datePattern).IsMatch(authorRequest.DateOfBirth))
+        if (!new Regex(DatePattern).IsMatch(authorRequest.DateOfBirth))
         {
             throw new ValidationException("Дата должна соответствовать формату dd.mm.yyyy");
         }
@@ -39,10 +39,12 @@ public static class AuthorValidator
             }
         }
 
-        if (authorRequest.DateOfBirth == null) return;
-        if (!new Regex(_datePattern).IsMatch(authorRequest.DateOfBirth))
+        if (authorRequest.DateOfBirth == null)
         {
-            throw new ValidationException("Дата должна соответствовать формату dd.mm.yyyy");
+            if (!new Regex(DatePattern).IsMatch(authorRequest.DateOfBirth))
+            {
+                throw new ValidationException("Дата должна соответствовать формату dd.mm.yyyy");
+            }
         }
     }
 }
