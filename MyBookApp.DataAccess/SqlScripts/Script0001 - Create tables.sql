@@ -2,7 +2,7 @@ CREATE TABLE IF NOT EXISTS public."Authors"
 (
     "Id"          integer               NOT NULL GENERATED ALWAYS AS IDENTITY,
     "FullName"    character varying(50) NOT NULL,
-    "DateOfBirth" character varying(50) NOT NULL,
+    "DateOfBirth" date NOT NULL,
     PRIMARY KEY ("Id")
 );
 

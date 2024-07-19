@@ -20,7 +20,7 @@ public class AuthorRepository : IAuthorRepository
                     VALUES (@FullName,@DateOfBirth)
                     RETURNING ""Id"";";
 
-        var id = await connection.ExecuteScalarAsync<int>(sql, author);
+        var id = await connection.ExecuteScalarAsync<int>(sql, new {FullName = author.FullName,DateOfBirth = author.DateOfBirth.Date});
         await connection.CloseAsync();
 
         return id;
