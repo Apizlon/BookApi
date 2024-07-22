@@ -1,0 +1,1 @@
+SELECT count(1) FROM "Books" WHERE "Id" = @Id;

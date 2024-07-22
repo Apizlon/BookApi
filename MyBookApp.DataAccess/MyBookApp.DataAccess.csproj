@@ -21,7 +21,26 @@
 
     <ItemGroup>
       <None Remove="SqlScripts\Script0001 - Create tables.sql" />
-      <EmbeddedResource Include="SqlScripts\Script0001 - Create tables.sql" />
+      <EmbeddedResource Include="SqlScripts\Embedded\Script0001 - Create tables.sql" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="SqlScripts\Sql.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Sql.resx</DependentUpon>
+      </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Update="SqlScripts\Sql.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>Sql.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="SqlScripts\Publisher\" />
     </ItemGroup>
 
 </Project>

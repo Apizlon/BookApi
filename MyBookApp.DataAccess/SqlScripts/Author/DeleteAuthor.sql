@@ -1,0 +1,1 @@
+DELETE FROM "Authors" WHERE "Id" = @Id;

@@ -1,0 +1,1 @@
+DELETE FROM "Publishers" WHERE "Id" = @Id;

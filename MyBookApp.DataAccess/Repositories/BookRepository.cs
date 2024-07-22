@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using MyBookApp.Core.Models;
 using MyBookApp.DataAccess.Interfaces;
+using MyBookApp.DataAccess.SqlScripts;
 using Npgsql;
 
 namespace MyBookApp.DataAccess.Repositories;
@@ -17,11 +18,7 @@ public class BookRepository : IBookRepository
     public async Task<int> AddBookAsync(Book book)
     {
         await using var connection = new NpgsqlConnection(_dbConnection);
-        var sql = @"INSERT INTO ""Books"" (""Name"",""Description"",""AuthorId"",""PublisherId"")
-                    VALUES (@Name,@Description,@AuthorId,@PublisherId)
-                    RETURNING ""Id"";";
-
-        var id = await connection.ExecuteScalarAsync<int>(sql, book);
+        var id = await connection.ExecuteScalarAsync<int>(Sql.AddBook, book);
         await connection.CloseAsync();
 
         return id;
@@ -30,21 +27,14 @@ public class BookRepository : IBookRepository
     public async Task DeleteBookAsync(int id)
     {
         await using var connection = new NpgsqlConnection(_dbConnection);
-
-        var sql = @"DELETE FROM ""Books"" WHERE ""Id"" = @Id;";
-        
-        await connection.ExecuteAsync(sql, new { Id = id });
+        await connection.ExecuteAsync(Sql.DeleteBook, new { Id = id });
         await connection.CloseAsync();
     }
 
     public async Task<Book> GetBookAsync(int id)
     {
         await using var connection = new NpgsqlConnection(_dbConnection);
-
-        var sql = @"SELECT * FROM ""Books""
-                    WHERE ""Id"" = @Id;";
-
-        var book = await connection.QuerySingleOrDefaultAsync<Book>(sql, new { Id = id });
+        var book = await connection.QuerySingleOrDefaultAsync<Book>(Sql.GetBook, new { Id = id });
         await connection.CloseAsync();
 
         return book;
@@ -53,27 +43,14 @@ public class BookRepository : IBookRepository
     public async Task UpdateBookAsync(int id, Book book)
     {
         await using var connection = new NpgsqlConnection(_dbConnection);
-
-        var sql = @"UPDATE ""Books""
-                    SET
-                        ""Name"" = CASE WHEN @Name IS NULL THEN ""Name"" ELSE @Name END,
-                        ""Description"" = CASE WHEN @Description IS NULL THEN ""Description"" ELSE @Description END,
-                        ""AuthorId"" = CASE WHEN @AuthorId = 0 THEN ""AuthorId"" ELSE @AuthorId END,
-                        ""PublisherId"" = CASE WHEN @PublisherId = 0 THEN ""PublisherId"" ELSE @PublisherId END
-                    WHERE ""Id"" = @Id;";
-
-        await connection.ExecuteAsync(sql, new { Id = id, book.Name,book.Description,book.AuthorId,book.PublisherId});
+        await connection.ExecuteAsync(Sql.UpdateBook, new { Id = id, book.Name,book.Description,book.AuthorId,book.PublisherId});
         await connection.CloseAsync();
     }
 
     public async Task<IEnumerable<Book>> GetBooksByAuthorIdAsync(int authorId)
     {
         await using var connection = new NpgsqlConnection(_dbConnection);
-
-        var sql = @"SELECT ""Id"",""Name"",""Description"",""AuthorId"",""PublisherId"" FROM ""Books""
-                    WHERE ""AuthorId"" = @AuthorId;";
-
-        var books = await connection.QueryAsync<Book>(sql, new { AuthorId = authorId });
+        var books = await connection.QueryAsync<Book>(Sql.GetBooksByAuthorId, new { AuthorId = authorId });
         await connection.CloseAsync();
 
         return books;
@@ -82,11 +59,7 @@ public class BookRepository : IBookRepository
     public async Task<IEnumerable<Book>> GetBooksByPublisherIdAsync(int publisherId)
     {
         await using var connection = new NpgsqlConnection(_dbConnection);
-
-        var sql = @"SELECT ""Id"",""Name"",""Description"",""AuthorId"",""PublisherId"" FROM ""Books""
-                    WHERE ""PublisherId"" = @PublisherId;";
-
-        var books = await connection.QueryAsync<Book>(sql, new { PublisherId = publisherId });
+        var books = await connection.QueryAsync<Book>(Sql.GetBooksByPublisherId, new { PublisherId = publisherId });
         await connection.CloseAsync();
 
         return books;
@@ -95,10 +68,7 @@ public class BookRepository : IBookRepository
     public async Task<bool> BookExistsAsync(int id)
     {
         await using var connection = new NpgsqlConnection(_dbConnection);
-
-        var sql = @"SELECT count(1) FROM ""Books"" WHERE ""Id"" = @Id;";
-
-        var exists = await connection.ExecuteScalarAsync<bool>(sql, new { Id = id });
+        var exists = await connection.ExecuteScalarAsync<bool>(Sql.ExistsBook, new { Id = id });
         await connection.CloseAsync();
 
         return exists;

@@ -1,0 +1,1 @@
+SELECT count(1) FROM "Authors" WHERE "Id" = @Id;
