@@ -70,7 +70,7 @@ public class BookRepository : IBookRepository
     {
         await using var connection = new NpgsqlConnection(_dbConnection);
 
-        var sql = @"SELECT * FROM ""Books""
+        var sql = @"SELECT ""Id"",""Name"",""Description"",""AuthorId"",""PublisherId"" FROM ""Books""
                     WHERE ""AuthorId"" = @AuthorId;";
 
         var books = await connection.QueryAsync<Book>(sql, new { AuthorId = authorId });
@@ -83,7 +83,7 @@ public class BookRepository : IBookRepository
     {
         await using var connection = new NpgsqlConnection(_dbConnection);
 
-        var sql = @"SELECT * FROM ""Books""
+        var sql = @"SELECT ""Id"",""Name"",""Description"",""AuthorId"",""PublisherId"" FROM ""Books""
                     WHERE ""PublisherId"" = @PublisherId;";
 
         var books = await connection.QueryAsync<Book>(sql, new { PublisherId = publisherId });
