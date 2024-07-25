@@ -74,7 +74,7 @@ public class BookService : IBookService
         var isPublisherExists = await _publisherRepository.PublisherExistsAsync(publisherId);
         if (!isPublisherExists)
         {
-            throw new AuthorNotFoundException(publisherId);
+            throw new PublisherNotFoundException(publisherId);
         }
         var books = await _bookRepository.GetBooksByPublisherIdAsync(publisherId);
         return books.MapToContract();
