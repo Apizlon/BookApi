@@ -14,13 +14,9 @@ builder.Services.AddTransient<CustomExceptionHandlingMiddleware>();
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
 
-app.UseHttpsRedirection();
 app.UseMiddleware<CustomExceptionHandlingMiddleware>();
 app.UseAuthorization();
 app.MapControllers();
